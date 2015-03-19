@@ -1,7 +1,25 @@
-#
-# Run all tests
-#
-test:
-	@@node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -u exports -R spec test/*
+#!/bin/bash
 
-.PHONY: test
+MOCHA = node_modules/.bin/mocha
+MOCHA_SPAWN = node_modules/.bin/_mocha
+ISTANBUL = node_modules/.bin/istanbul
+COVERAGE_REPORT = ./coverage/lcov.info
+CODECLIMATE = ./node_modules/.bin/codeclimate
+COVERALLS = ./node_modules/coveralls/bin/coveralls.js
+
+clean:
+	rm -rf coverage
+
+test:
+	$(MOCHA) -R spec $(TESTS)
+
+coverage:
+	$(ISTANBUL) cover $(MOCHA_SPAWN) -- -R spec test/*
+
+coveralls:
+	cat $(COVERAGE_REPORT) | $(COVERALLS)
+
+codeclimate:
+	cat $(COVERAGE_REPORT) | $(CODECLIMATE)
+
+.PHONY: test clean coverage coveralls codeclimate
