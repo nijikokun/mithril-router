@@ -238,7 +238,7 @@ describe('m.route', function () {
   })
 
   describe('(element(, boolean))', function () {
-    it('should return the correct currentPath', function () {
+    it('should invoke element event attachment when element is passed', function () {
       var element = {
         addEventListener: true,
         attachEvent: true
@@ -251,6 +251,21 @@ describe('m.route', function () {
 
       // Configure
       m.route(element)
+    })
+
+    it('should invoke element event when element and boolean is passed', function () {
+      var element = {
+        addEventListener: true,
+        attachEvent: true
+      }
+
+      // Overwrite
+      mockRoute(m, function (el) {
+        assert.deepEqual(el, element)
+      })
+
+      // Configure
+      m.route(element, true)
     })
   })
 

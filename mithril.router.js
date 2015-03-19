@@ -102,7 +102,7 @@ function Plugin (m) {
     }
 
     // m.route(element)
-    if ((arguments[0].addEventListener || arguments[0].attachEvent) && typeof arguments[1] !== 'string') {
+    if ((arguments[0].addEventListener || arguments[0].attachEvent) && (typeof arguments[1] === 'undefined' || typeof arguments[1] === 'boolean')) {
       return m._route(arguments[0], arguments[1], arguments[2])
     }
 
