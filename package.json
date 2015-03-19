@@ -17,5 +17,12 @@
     "query"
   ],
   "author": "Nijiko Yonskai <nijikokun@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "mithril": "^0.1.30"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.8",
+    "mocha": "^2.2.1"
+  }
 }

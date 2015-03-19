@@ -33,19 +33,14 @@ function Plugin (m) {
    * @type {Function}
    * @private
    */
-  m._route = m.route;
+  m._route = m.route
 
   /**
    * Classic route collection
    * @type {Object}
+   * @private
    */
-  m._route.routes = {};
-
-  /**
-   * Current route parameters
-   * @type {Object}
-   */
-  m._route.params = {};
+  m._route.routes = {}
 
   /**
    * Router modes
@@ -59,14 +54,11 @@ function Plugin (m) {
   }
 
   /**
-   * Normalize route by router mode
-   *
-   * @param  {String} route
-   * @return {String}
+   * Default router mode, defaults to string
+   * @type {String}
+   * @private
    */
-  m._route.normalizeRoute = function (route) {
-    return route.slice(m._route.modes[m.route.mode].length)
-  }
+  m._route.mode = 'search'
 
   /**
    * Router allowing creation of Single-Page-Applications (SPA) with a DRY mechanism
@@ -99,8 +91,13 @@ function Plugin (m) {
       return m._route();
     }
 
-    // m.route(namespace|route(, args))
+    // m.route(namespace|route)
     if (arguments.length === 1 && typeof arguments[0] === 'string') {
+      return m._route(m.routes[arguments[0]] || arguments[0])
+    }
+
+    // m.route(namespace|route(, args))
+    if (arguments.length === 2 && typeof arguments[0] === 'string' && (typeof arguments[1] === 'object' || typeof arguments[1] === 'undefined')) {
       return m._route(m.routes[arguments[0]] || arguments[0], arguments[1])
     }
 
@@ -110,7 +107,7 @@ function Plugin (m) {
     }
 
     // m.route(rootElement, routes)
-    if (arguments.length === 2 && typeof arguments[1] === 'object') {
+    if (arguments.length === 2 && typeof arguments[1] === 'object' && typeof arguments[0] !== 'string') {
       return m.route._config(arguments[0], arguments[1])
     }
 
@@ -118,13 +115,36 @@ function Plugin (m) {
     if (arguments.length === 3 && typeof arguments[1] === 'string') {
       return m.route._config(arguments[0], arguments[2], arguments[1])
     }
+
+    throw new Error("Method signature not support")
   }
 
   /**
    * Router mode, defaults to search
    * @type {String}
    */
-  m.route.mode = 'search';
+  Object.defineProperty(m.route, 'mode', {
+    get: function () {
+      return m._route.mode
+    },
+
+    set: function (value) {
+      m._route.mode = value
+    },
+
+    enumerable: true,
+    configurable: true
+  })
+
+  /**
+   * Normalize route by router mode
+   *
+   * @param  {String} route
+   * @return {String}
+   */
+  m.route.normalize = function (namespace) {
+    return (m.routes[namespace] || namespace).slice(m._route.modes[m.route.mode].length)
+  }
 
   /**
    * Register a collection of paths to controllers with namespaces.
@@ -133,11 +153,13 @@ function Plugin (m) {
    * @param  {Object} routes Collection of paths to be registered
    * @param  {String} root    Route or route namespace to be registered as the default route
    * @return {void}
+   * @private
    */
   m.route._config = function (element, routes, root) {
     var route
 
     for (var path in routes) {
+      /* istanbul ignore else */
       if (routes.hasOwnProperty(path)) {
         route = routes[path]
 
@@ -172,7 +194,7 @@ function Plugin (m) {
     // This is liable to change to throw an error in the future,
     // do not rely on this mechanism.
     if (!root) {
-      root = routes[Object.keys(routes)[0]].path
+      root = Object.keys(routes)[0]
     }
 
     return m._route(element, root, m._route.routes)
@@ -184,7 +206,7 @@ function Plugin (m) {
    * @return {Object}
    */
   m.route.param = function () {
-    if (!m.routes) {
+    if (!Object.keys(m.routes).length) {
       throw new Error("You must configure routing using m.route before calling m.route.param")
     }
 
@@ -230,6 +252,7 @@ function Plugin (m) {
     }
 
     for (var prop in object) {
+      /* istanbul ignore else */
       if (object.hasOwnProperty(prop)) {
         key = prefix ? prefix + "[" + prop + "]" : prop
         value = object[prop]
@@ -303,7 +326,7 @@ function Plugin (m) {
 
     if (options.query) {
       query = m.route.buildQueryString(options.query)
-      reversedRoute += (reversedRoute.indexOf('?') ? '&' : '?') + query
+      reversedRoute += (reversedRoute.indexOf('?') !== -1 ? '&' : '?') + query
     }
 
     return reversedRoute
@@ -345,10 +368,13 @@ function Plugin (m) {
       return prefix + value
     })
   }
+
+  return m
 }
 
+/* istanbul ignore next */
 if (typeof module !== 'undefined' && module !== null && module.exports) {
-  Plugin(require('mithril'))
+  module.exports = Plugin(require('mithril'))
 } else if (typeof define === 'function' && define.amd) {
   define(['mithril'], Plugin)
 } else if (typeof window !== 'undefined') {
