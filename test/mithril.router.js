@@ -3,7 +3,7 @@ var classicRoutesFixture
 var documentFixture
 var routesFixture
 var argsFixture
-var m
+var m = require('../mithril.router.js')(require('mithril'))
 
 function mockRoute (m, method) {
   var routes = m._route ? m._route.routes : {}
@@ -17,8 +17,6 @@ function mockRoute (m, method) {
 }
 
 beforeEach(function () {
-  m = require('../mithril.router.js')
-
   documentFixture = {
     ATTRIBUTE_NODE: 2
   }
@@ -404,6 +402,31 @@ describe('m.reverse', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
     assert(m.reverse("user", { params: argsFixture }) === '/users/23')
+  })
+
+  it('should handle optional parameters', function () {
+    mockRoute(m, function () {})
+
+    m.route(documentFixture, {
+      "/:key?": {controller: "index", namespace: "test"}
+    })
+
+    assert(m.reverse("test") === '/')
+  })
+
+  it('should handle escaped characters', function () {
+    mockRoute(m, function () {})
+
+    m.route(documentFixture, {
+      "/:href\\/:key/(.+)?": {controller: "index", namespace: "test"}
+    })
+
+    assert(m.reverse("test", {
+      params: {
+        href: 'test',
+        key: 'world'
+      }
+    }) === '/test\\/world/')
   })
 
   it('should error on missing arguments', function () {

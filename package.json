@@ -18,10 +18,8 @@
   ],
   "author": "Nijiko Yonskai <nijikokun@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "mithril": "^0.1.30"
-  },
   "devDependencies": {
+    "mithril": "^0.1.30",
     "codeclimate-test-reporter": "0.0.4",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.8",

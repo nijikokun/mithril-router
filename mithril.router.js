@@ -374,7 +374,7 @@ function Plugin (m) {
 
 /* istanbul ignore next */
 if (typeof module !== 'undefined' && module !== null && module.exports) {
-  module.exports = Plugin(require('mithril'))
+  module.exports = Plugin
 } else if (typeof define === 'function' && define.amd) {
   define(['mithril'], Plugin)
 } else if (typeof window !== 'undefined') {
