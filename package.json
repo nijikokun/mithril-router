@@ -1,0 +1,21 @@
+{
+  "name": "mithril-router",
+  "version": "1.0.0",
+  "description": "Django style router for Mithril.js",
+  "main": "mithril.router.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "keywords": [
+    "router",
+    "mithril",
+    "django",
+    "reverse",
+    "routing",
+    "route",
+    "path",
+    "query"
+  ],
+  "author": "Nijiko Yonskai <nijikokun@gmail.com>",
+  "license": "MIT"
+}
