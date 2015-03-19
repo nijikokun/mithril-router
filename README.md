@@ -2,6 +2,14 @@
 
 Django style router for [Mithril.js][mithril]
 
+[![version][npm-version]][npm-url]
+[![License][npm-license]][license-url]
+[![Build Status][travis-image]][travis-url]
+[![Downloads][npm-downloads]][npm-url]
+[![Code Climate][codeclimate-quality]][codeclimate-url]
+[![Coverage Status][codeclimate-coverage]][codeclimate-url]
+[![Dependencies][david-image]][david-url]
+
 ## Install
 
 - Download [the latest package][download]
@@ -80,6 +88,30 @@ m.reverse('user', { params: { id: 23 }})
 // user => /user/:id => /user/23?include=profile
 m.reverse('user', { params: { id: 23 }, query: { include: 'profile' }})
 ```
+
+## License
+
+Licensed under [The MIT License](LICENSE).
+
+[license-url]: https://github.com/Nijikokun/mithril-router/blob/master/LICENSE
+
+[travis-url]: https://travis-ci.org/Nijikokun/mithril-router
+[travis-image]: https://img.shields.io/travis/Nijikokun/mithril-router.svg?style=flat
+
+[npm-url]: https://www.npmjs.com/package/mithril-router
+[npm-license]: https://img.shields.io/npm/l/mithril-router.svg?style=flat
+[npm-version]: https://img.shields.io/npm/v/mithril-router.svg?style=flat
+[npm-downloads]: https://img.shields.io/npm/dm/mithril-router.svg?style=flat
+
+[coveralls-url]: https://coveralls.io/r/Nijikokun/mithril-router
+[coveralls-coverage]: https://img.shields.io/coveralls/jekyll/jekyll.svg
+
+[codeclimate-url]: https://codeclimate.com/github/Nijikokun/mithril-router
+[codeclimate-quality]: https://img.shields.io/codeclimate/github/Nijikokun/mithril-router.svg?style=flat
+[codeclimate-coverage]: https://img.shields.io/codeclimate/coverage/github/Nijikokun/mithril-router.svg?style=flat
+
+[david-url]: https://david-dm.org/Nijikokun/mithril-router
+[david-image]: https://img.shields.io/david/Nijikokun/mithril-router.svg?style=flat
 
 [download]: https://github.com/Nijikokun/mithril-router/archive/v1.1.0.zip
 [mithril]: https://github.com/lhorie/mithril.js
