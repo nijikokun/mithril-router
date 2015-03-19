@@ -81,7 +81,7 @@ m.reverse('user', { params: { id: 23 }})
 m.reverse('user', { params: { id: 23 }, query: { include: 'profile' }})
 ```
 
-[download]: https://github.com/Nijikokun/mithril-router
+[download]: https://github.com/Nijikokun/mithril-router/archive/v1.1.0.zip
 [mithril]: https://github.com/lhorie/mithril.js
 [mithril-mode]: http://lhorie.github.io/mithril/mithril.route.html#mode
 [mithril-param]: http://lhorie.github.io/mithril/mithril.route.html#param
