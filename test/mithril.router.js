@@ -44,6 +44,18 @@ beforeEach(function () {
   }
 })
 
+describe('Router', function () {
+  it('should only patch mithril once', function () {
+    var mock = require('../mithril.router.js')({
+      _route: true
+    })
+
+    assert(mock._route === true)
+    assert(typeof mock.reverse === 'undefined')
+    assert(typeof mock.redirect === 'undefined')
+  })
+})
+
 describe('m._route', function () {
   it('should be a function', function () {
     assert(typeof m._route === 'function')

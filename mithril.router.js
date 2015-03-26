@@ -4,6 +4,11 @@
  * @param {Object} m Mithril
  */
 function Plugin (m) {
+  // Mithril is already patched, exit to avoid infinite recursion
+  if (m._route) {
+    return m
+  }
+
   var RouteRegexp = new RegExp([
     // Match already escaped characters that would otherwise incorrectly appear
     // in future matches. This allows the user to escape special characters that
