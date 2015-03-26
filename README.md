@@ -15,6 +15,27 @@ Django style router for [Mithril.js][mithril]
 - Download [the latest package][download]
 - NPM: `npm install mithril-router`
 
+## Usage
+
+**Node.js / Browserify**
+
+```js
+// Include mithril
+var m = require('mithril')
+
+// Pass mithril to the router.
+// Only required to overload once, subsequent overloads will
+// return the same instance
+require('mithril-router')(m)
+```
+
+**Browser**
+
+```html
+<script src="path/to/mithril.js" type="text/javascript"></script>
+<script src="path/to/mithril.router.js" type="text/javascript"></script>
+```
+
 ## Documentation
 
 ### m.route()
@@ -33,9 +54,21 @@ Router allowing creation of Single-Page-Applications (SPA) with a DRY mechanism
 To define routing specify a host DOM element, and routes with a root route. Should no root
 route be specified, the first route is chosen.
 
+**New**
+
 ```js
 m.route(document.body, {
   "/": { controller: home, namespace: "index", root: true },
+  "/login": { controller: login, namespace: "login" },
+  "/dashboard": { controller: dashboard, namespace: "dashboard" }
+})
+```
+
+**Classic**
+
+```js
+m.route(document.body, "/", {
+  "/": { controller: home, namespace: "index" },
   "/login": { controller: login, namespace: "login" },
   "/dashboard": { controller: dashboard, namespace: "dashboard" }
 })
