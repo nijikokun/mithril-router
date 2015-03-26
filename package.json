@@ -1,6 +1,6 @@
 {
   "name": "mithril-router",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Django style router for Mithril.js",
   "main": "mithril.router.js",
   "scripts": {

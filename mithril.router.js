@@ -102,7 +102,7 @@ function Plugin (m) {
     }
 
     // m.route(namespace|route(, args))
-    if (arguments.length === 2 && typeof arguments[0] === 'string' && (typeof arguments[1] === 'object' || typeof arguments[1] === 'undefined')) {
+    if (arguments.length === 2 && typeof arguments[0] === 'string' && (typeof arguments[1] === 'object' || typeof arguments[1] === 'boolean' || typeof arguments[1] === 'undefined')) {
       return m._route(m.routes[arguments[0]] || arguments[0], arguments[1])
     }
 

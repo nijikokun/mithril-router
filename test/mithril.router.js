@@ -197,6 +197,24 @@ describe('m.route', function () {
       m.route("index")
     })
 
+    it('should support boolean instead of arguments', function (done) {
+      // Overwrite
+      mockRoute(m, function () {})
+
+      // Configure
+      m.route(documentFixture, routesFixture)
+
+      // Overwrite
+      mockRoute(m, function (route, args) {
+        assert(route === "/")
+        assert(args === true)
+        done()
+      })
+
+      // Configure
+      m.route("index", true)
+    })
+
     it('should return the arguments unchanged', function (done) {
       // Overwrite
       mockRoute(m, function () {})
