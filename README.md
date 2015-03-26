@@ -113,7 +113,7 @@ Licensed under [The MIT License](LICENSE).
 [david-url]: https://david-dm.org/Nijikokun/mithril-router
 [david-image]: https://img.shields.io/david/Nijikokun/mithril-router.svg?style=flat
 
-[download]: https://github.com/Nijikokun/mithril-router/archive/v1.2.0.zip
+[download]: https://github.com/Nijikokun/mithril-router/archive/v1.2.3.zip
 [mithril]: https://github.com/lhorie/mithril.js
 [mithril-mode]: http://lhorie.github.io/mithril/mithril.route.html#mode
 [mithril-param]: http://lhorie.github.io/mithril/mithril.route.html#param
