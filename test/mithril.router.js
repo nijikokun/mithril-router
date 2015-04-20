@@ -502,4 +502,11 @@ describe('m.reverse', function () {
       m.reverse("current-user")
     }, Error)
   })
+
+  it("should prepend route mode prefixes", function () {
+    mockRoute(m, function () {})
+    m.route(documentFixture, routesFixture)
+    m.route.mode = "hash"
+    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }}) === '#/users/23?include=profile')
+  })
 })

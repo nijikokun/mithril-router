@@ -1,9 +1,13 @@
-/**
- * Plugin Constructor
- *
- * @param {Object} m Mithril
- */
-function Plugin (m) {
+(function (plugin) {
+  /* istanbul ignore next: differing implementations */
+  if (typeof module !== 'undefined' && module !== null && module.exports) {
+    module.exports = plugin
+  } else if (typeof define === 'function' && define.amd) {
+    define(['mithril'], plugin)
+  } else if (typeof window !== 'undefined') {
+    plugin(m)
+  }
+})(function MithrilRouter (m) {
   // Mithril is already patched, exit to avoid infinite recursion
   if (m._route) {
     return m
@@ -24,7 +28,7 @@ function Plugin (m) {
 
     // Match regexp special characters that should always be escaped.
     '([.+*?=^!:${}()[\\]|\\/])'
-  ].join('|'), 'g');
+  ].join('|'), 'g')
 
   /**
    * Mithril route collection
@@ -93,7 +97,7 @@ function Plugin (m) {
   m.route = function () {
     // m.route()
     if (arguments.length === 0) {
-      return m._route();
+      return m._route()
     }
 
     // m.route(namespace|route)
@@ -334,7 +338,7 @@ function Plugin (m) {
       reversedRoute += (reversedRoute.indexOf('?') !== -1 ? '&' : '?') + query
     }
 
-    return reversedRoute
+    return (m._route.modes[m.route.mode] || "") + reversedRoute
   }
 
   /**
@@ -375,13 +379,4 @@ function Plugin (m) {
   }
 
   return m
-}
-
-/* istanbul ignore next */
-if (typeof module !== 'undefined' && module !== null && module.exports) {
-  module.exports = Plugin
-} else if (typeof define === 'function' && define.amd) {
-  define(['mithril'], Plugin)
-} else if (typeof window !== 'undefined') {
-  Plugin(m)
-}
+})
