@@ -309,6 +309,8 @@
    *
    * - `params`: **Object** Route parameters, named and non-named.
    * - `query`: **String | Object** Querystring
+   * - `prefix`: **String | Boolean** Mode, when `true` prepends the mode char to the route,
+   *   when defined as a string the string is prepended instead.
    *
    * #### Examples
    *
@@ -332,6 +334,7 @@
     var namespace = arguments[0]
     var route = m.routes[namespace]
     var reversedRoute
+    var prefix
     var query
 
     if (!route) {
@@ -340,12 +343,18 @@
 
     reversedRoute = m.reverse._reverseRoute(route, options.params)
 
+    if (typeof options.prefix === 'string') {
+      prefix = options.prefix
+    } else if (options.prefix) {
+      prefix = m._route.modes[m.route.mode] || ""
+    }
+
     if (options.query) {
       query = m.route.buildQueryString(options.query)
       reversedRoute += (reversedRoute.indexOf('?') !== -1 ? '&' : '?') + query
     }
 
-    return (m._route.modes[m.route.mode] || "") + reversedRoute
+    return prefix + reversedRoute
   }
 
   /**

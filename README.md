@@ -110,6 +110,10 @@ Generate path using specified identifier (route namespace) and path arguments.
 
 - `params`: **Object** Route parameters, named and non-named.
 - `query`: **String | Object** Querystring
+- `prefix`: **String | Boolean** Mode, when `true` prepends the mode char to the route,
+  when defined as a string the string is prepended instead.
+
+  Useful for when you are not using `config: m.route`
 
 #### Examples
 
@@ -122,6 +126,13 @@ m.reverse('user', { params: { id: 23 }})
 
 // user => /user/:id => /user/23?include=profile
 m.reverse('user', { params: { id: 23 }, query: { include: 'profile' }})
+
+// user => /user/:id => #/user/23?include=profile
+m.route.mode = 'hash'
+m.reverse('user', { prefix: true, params: { id: 23 }, query: { include: 'profile' }})
+
+// user => /user/:id => /api/user/23?include=profile
+m.reverse('user', { prefix: '/api', params: { id: 23 }, query: { include: 'profile' }})
 ```
 
 ## License
