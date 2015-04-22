@@ -560,10 +560,23 @@ describe('m.reverse', function () {
     }, Error)
   })
 
-  it("should prepend route mode prefixes", function () {
+  it("should prepend route mode prefixes when prefix option is a boolean", function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
     m.route.mode = "hash"
-    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }}) === '#/users/23?include=profile')
+    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }, prefix: true }) === '#/users/23?include=profile')
+  })
+
+  it("should fallback to an empty string when prefix mode cannot be found", function () {
+    mockRoute(m, function () {})
+    m.route(documentFixture, routesFixture)
+    m.route.mode = "testing"
+    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }, prefix: true }) === '/users/23?include=profile')
+  })
+
+  it("should prepend custom prefix when prefix is a string", function () {
+    mockRoute(m, function () {})
+    m.route(documentFixture, routesFixture)
+    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }, prefix: '/api' }) === '/api/users/23?include=profile')
   })
 })

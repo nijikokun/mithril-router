@@ -333,8 +333,8 @@
     var options = arguments[1] || {}
     var namespace = arguments[0]
     var route = m.routes[namespace]
+    var prefix = ""
     var reversedRoute
-    var prefix
     var query
 
     if (!route) {
