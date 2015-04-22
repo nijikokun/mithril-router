@@ -76,10 +76,12 @@
    * ### API
    *
    * - `m.route()`: returns current route
-   * - `m.route(element)`: bind elements while abstracting away route mode
-   * - `m.route(namespace|route(, args))`: programmatic redirect w/ arguments
-   * - `m.route(rootElement, routes)`: configure app routing
-   * - `m.route(rootElement, rootRoute, routes)`: configure app routing (mithril default router style)
+   * - `m.route(element:DOMElement)`: bind elements while abstracting away route mode
+   * - `m.route(namespace|route(, parameters:Object))`: programmatic redirect w/ arguments
+   * - `m.route(namespace|route(, replaceHistory:Boolean))`: programmatic redirect w/ replacing history entry
+   * - `m.route(namespace|route(, parameters:Object, replaceHistory:Boolean))`: programmatic redirect w/ arguments and replacing history entry
+   * - `m.route(rootElement:DOMElement, routes:Object)`: configure app routing
+   * - `m.route(rootElement:DOMElement, rootRoute:String, routes:Object)`: configure app routing (mithril default router style)
    *
    * ### Configure Routing
    *
@@ -105,14 +107,19 @@
       return m._route(m.routes[arguments[0]] || arguments[0])
     }
 
-    // m.route(namespace|route(, args))
+    // m.route(namespace|route(, parameters:Object|Boolean))
     if (arguments.length === 2 && typeof arguments[0] === 'string' && (typeof arguments[1] === 'object' || typeof arguments[1] === 'boolean' || typeof arguments[1] === 'undefined')) {
       return m._route(m.routes[arguments[0]] || arguments[0], arguments[1])
     }
 
+    // m.route(namespace|route(, parameters:Object, replaceHistory:Boolean))
+    if (arguments.length === 3 && typeof arguments[0] === 'string' && (typeof arguments[1] === 'object' || typeof arguments[1] === 'undefined') && typeof arguments[2] === 'boolean') {
+      return m._route(m.routes[arguments[0]] || arguments[0], arguments[1], arguments[2])
+    }
+
     // m.route(element)
     if ((arguments[0].addEventListener || arguments[0].attachEvent) && (typeof arguments[1] === 'undefined' || typeof arguments[1] === 'boolean')) {
-      return m._route(arguments[0], arguments[1], arguments[2])
+      return m._route.call(this, arguments[0], arguments[1], arguments[2], arguments[3])
     }
 
     // m.route(rootElement, routes)

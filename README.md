@@ -44,10 +44,12 @@ Router allowing creation of Single-Page-Applications (SPA) with a DRY mechanism
 (identification classified as namespaces) to prevent hard-coded URLs.
 
 - `m.route()`: returns current route
-- `m.route(element)`: bind elements while abstracting away route mode
-- `m.route(namespace|route(, args))`: programmatic redirect w/ arguments
-- `m.route(rootElement, routes)`: configure app routing
-- `m.route(rootElement, rootRoute, routes)`: configure app routing (mithril default router style)
+- `m.route(element:DOMElement)`: bind elements while abstracting away route mode
+- `m.route(namespace|route(, parameters:Object))`: programmatic redirect w/ arguments
+- `m.route(namespace|route(, replaceHistory:Boolean))`: programmatic redirect w/ replacing history entry
+- `m.route(namespace|route(, parameters:Object, replaceHistory:Boolean))`: programmatic redirect w/ arguments and replacing history entry
+- `m.route(rootElement:DOMElement, routes:Object)`: configure app routing
+- `m.route(rootElement:DOMElement, rootRoute:String, routes:Object)`: configure app routing (mithril default router style)
 
 #### Configure Routing
 

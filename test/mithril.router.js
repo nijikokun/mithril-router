@@ -197,24 +197,6 @@ describe('m.route', function () {
       m.route("index")
     })
 
-    it('should support boolean instead of arguments', function (done) {
-      // Overwrite
-      mockRoute(m, function () {})
-
-      // Configure
-      m.route(documentFixture, routesFixture)
-
-      // Overwrite
-      mockRoute(m, function (route, args) {
-        assert(route === "/")
-        assert(args === true)
-        done()
-      })
-
-      // Configure
-      m.route("index", true)
-    })
-
     it('should return the arguments unchanged', function (done) {
       // Overwrite
       mockRoute(m, function () {})
@@ -230,6 +212,62 @@ describe('m.route', function () {
 
       // Configure
       m.route("index", argsFixture)
+    })
+
+    it('should support replaceHistory flag instead of arguments', function (done) {
+      // Overwrite
+      mockRoute(m, function () {})
+
+      // Configure
+      m.route(documentFixture, routesFixture)
+
+      // Overwrite
+      mockRoute(m, function (route, replaceHistory) {
+        assert(route === "/")
+        assert(replaceHistory === true)
+        done()
+      })
+
+      // Configure
+      m.route("index", true)
+    })
+
+    it('should support both replaceHistory and arguments', function (done) {
+      // Overwrite
+      mockRoute(m, function () {})
+
+      // Configure
+      m.route(documentFixture, routesFixture)
+
+      // Overwrite
+      mockRoute(m, function (route, args, replaceHistory) {
+        assert(route === "/")
+        assert.deepEqual(args, argsFixture)
+        assert(replaceHistory === true)
+        done()
+      })
+
+      // Configure
+      m.route("index", argsFixture, true)
+    })
+
+    it('should support both replaceHistory and no arguments', function (done) {
+      // Overwrite
+      mockRoute(m, function () {})
+
+      // Configure
+      m.route(documentFixture, routesFixture)
+
+      // Overwrite
+      mockRoute(m, function (route, args, replaceHistory) {
+        assert(route === "/")
+        assert(args === undefined)
+        assert(replaceHistory === true)
+        done()
+      })
+
+      // Configure
+      m.route("index", undefined, true)
     })
 
     it('should return route when namespace is not used', function (done) {
@@ -264,6 +302,25 @@ describe('m.route', function () {
 
       // Configure
       m.route("/", argsFixture)
+    })
+
+    it('should support both replaceHistory and arguments without namespace', function (done) {
+      // Overwrite
+      mockRoute(m, function () {})
+
+      // Configure
+      m.route(documentFixture, routesFixture)
+
+      // Overwrite
+      mockRoute(m, function (route, args, replaceHistory) {
+        assert(route === "/")
+        assert(args === undefined)
+        assert(replaceHistory === true)
+        done()
+      })
+
+      // Configure
+      m.route("/", undefined, true)
     })
   })
 
