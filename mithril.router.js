@@ -312,6 +312,8 @@
    * - `prefix`: **String | Boolean** Mode, when `true` prepends the mode char to the route,
    *   when defined as a string the string is prepended instead.
    *
+   *   Useful for when you are not using `config: m.route`
+   *
    * #### Examples
    *
    *    // user => /user/
@@ -322,6 +324,13 @@
    *
    *    // user => /user/:id => /user/23?include=profile
    *    m.reverse('user', { params: { id: 23 }, query: { include: 'profile' }})
+   *
+   *    // user => /user/:id => #/user/23?include=profile
+   *    m.route.mode = 'hash'
+   *    m.reverse('user', { prefix: true, params: { id: 23 }, query: { include: 'profile' }})
+   *
+   *    // user => /user/:id => /api/user/23?include=profile
+   *    m.reverse('user', { prefix: '/api', params: { id: 23 }, query: { include: 'profile' }})
    *
    * Internationalization support is **PLANNED**, the expected api syntax will be as follows:
    *
