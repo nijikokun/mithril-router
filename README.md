@@ -60,7 +60,7 @@ route be specified, the first route is chosen.
 
 ```js
 m.route(document.body, {
-  "/": { controller: home, namespace: "index", root: true },
+  "/": { controller: home, middleware: [], namespace: "index", root: true },
   "/login": { controller: login, namespace: "login" },
   "/dashboard": { controller: dashboard, namespace: "dashboard" }
 })
@@ -70,7 +70,7 @@ m.route(document.body, {
 
 ```js
 m.route(document.body, "/", {
-  "/": { controller: home, namespace: "index" },
+  "/": { controller: home, middleware: [], namespace: "index" },
   "/login": { controller: login, namespace: "login" },
   "/dashboard": { controller: dashboard, namespace: "dashboard" }
 })
@@ -88,6 +88,53 @@ See [Mithril.route.html#mode][mithril-mode]
 
 See [Mithril.route.html#param][mithril-param]
 
+---
+
+### m.route.use()
+
+Mount middleware function(s) to all paths in the system, or mount the `m.routeErrorHandler` function.
+
+#### Api
+
+- `m.route.use(middleware)`
+
+#### Middleware Arguments
+
+By default it accepts to main arguments:
+
+- `req`
+  - `param` - Sugar for `m.route.param()`
+  - `namespace` - Route namespace
+  - `route` - Router path string
+  - `path` - Path part of Request URL
+  - `port` - Port part of Request URL
+  - `hostname` - Hostname part of Request URL
+  - `protocol` - Protocol part of Request URL
+  - `secure` - `req.protocol === 'https'`
+- `next` - Continuity method, invokes next middleware or route controller.
+  - `err` - When passed, invokes `m.routeErrorHandler` should no `m.routeErrorHandler` exist,
+  the controller is invoked with `req.error` set.
+
+To mount the `m.routeErrorHandler` the middleware passed has an arity of `3`:
+
+- `err` - Error object passed through previous middleware
+- `req` - Request object as described above.
+- `next` - Error handler continue (directly invokes controller with `req` object)
+
+#### Examples
+
+```js
+// Mount Middleware
+m.route.use(function (req, next) {
+  // handle request logic
+  return next()
+})
+
+// Mount Error Handler
+m.route.use(function (err, req, next) {
+  app.internalPageState.err = err
+  m.redirect('/err/500')
+})
 ---
 
 ### m.redirect()

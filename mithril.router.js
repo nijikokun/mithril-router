@@ -52,7 +52,9 @@
       return function MiddlewareNext (err) {
         if (err) {
           if (m.routeErrorHandler) {
-            return m.routeErrorHandler(err, req)
+            return m.routeErrorHandler(err, req, function MiddlewareErrorNext () {
+              return route.controller.bind(context)(req)
+            })
           }
 
           req.error = err
@@ -71,8 +73,12 @@
       var req = {
         param: m.route.param,
         namespace: route.namespace,
-        path: path,
-        uri: m.route()
+        route: path,
+        path: m.route(),
+        hostname: window.location.hostname,
+        protocol: window.location.protocol,
+        port: window.location.port,
+        secure: window.location.protocol === 'https'
       }
 
       if (middleware.length) {
