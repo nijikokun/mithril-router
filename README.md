@@ -113,13 +113,18 @@ By default it accepts to main arguments:
   - `secure` - `req.protocol === 'https'`
 - `next` - Continuity method, invokes next middleware or route controller.
   - `err` - When passed, invokes `m.routeErrorHandler` should no `m.routeErrorHandler` exist,
-  the controller is invoked with `req.error` set.
+  the controller is invoked with `req.error` set. See `skipAmount` for skip information.
+
+  - `skipAmount` - When `err` is the string `skip` you can pass a `Number` of middleware in the chain to be
+  skipped. Default `1`
 
 To mount the `m.routeErrorHandler` the middleware passed has an arity of `3`:
 
 - `err` - Error object passed through previous middleware
 - `req` - Request object as described above.
-- `next` - Error handler continue (directly invokes controller with `req` object)
+- `next` - Continuity method, invokes next function in chain
+  - Should `err` be passed skips any middleware and invokes the controller with `req.error` set.
+  - Supports `skip` functionality
 
 #### Examples
 
@@ -128,6 +133,16 @@ To mount the `m.routeErrorHandler` the middleware passed has an arity of `3`:
 m.route.use(function (req, next) {
   // handle request logic
   return next()
+})
+
+// Skip Middleware
+m.route.use(function (req, next) {
+  return next('skip')
+})
+
+// Skip Multiple Middleware
+m.route.use(function (req, next) {
+  return next('skip', 2)
 })
 
 // Mount Error Handler

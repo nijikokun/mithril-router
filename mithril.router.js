@@ -48,17 +48,19 @@
     middleware.concat(m.middleware || [])
     middleware.concat(route.middleware || [])
 
-    function generateMiddlewareNext (index, req, context) {
-      return function MiddlewareNext (err) {
-        if (err) {
-          if (m.routeErrorHandler) {
-            return m.routeErrorHandler(err, req, function MiddlewareErrorNext () {
-              return route.controller.bind(context)(req)
-            })
+    function generateMiddlewareNext (index, req, context, invokedErrorHandler) {
+      return function MiddlewareNext (err, skipAmount) {
+        if (err && err !== 'skip') {
+          if (m.routeErrorHandler && !invokedErrorHandler) {
+            return m.routeErrorHandler(err, req, generateMiddlewareNext(index + 1, req, context, true))
           }
 
           req.error = err
           return route.controller.bind(context)(req)
+        }
+
+        if (err === 'skip') {
+          index += skipAmount || 1
         }
 
         if (middleware[index]) {
