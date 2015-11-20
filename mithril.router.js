@@ -43,10 +43,12 @@
    */
   function generateRouteController (path, route) {
     var middleware = []
+    var component = route.controller
 
     // Generate route middleware array
     middleware.concat(m.middleware || [])
     middleware.concat(route.middleware || [])
+    middleware.concat(component.middleware || [])
 
     function generateMiddlewareNext (index, req, context, invokedErrorHandler) {
       return function MiddlewareNext (err, skipAmount) {
@@ -56,7 +58,7 @@
           }
 
           req.error = err
-          return route.controller.bind(context)(req)
+          return component.controller.bind(context)(req)
         }
 
         if (err === 'skip') {
@@ -67,7 +69,7 @@
           return middleware[index].bind(context)(req, generateMiddlewareNext(index + 1, req, context))
         }
 
-        return route.controller.bind(context)(req)
+        return component.controller.bind(context)(req)
       }
     }
 
@@ -87,7 +89,7 @@
         return middleware[0].bind(this)(req, generateMiddlewareNext(1, req, this))
       }
 
-      return route.controller.bind(this)(req)
+      return component.controller.bind(this)(req)
     }
   }
 
