@@ -1,7 +1,6 @@
 /* globals beforeEach, describe, it */
 
 var assert = require('assert')
-var classicRoutesFixture
 var documentFixture
 var routesFixture
 var argsFixture
@@ -32,18 +31,11 @@ beforeEach(function () {
     '/users/search?sort=default': {controller: 'search', namespace: 'user.search'}
   }
 
-  classicRoutesFixture = {
-    '/': 'home',
-    '/login': 'login',
-    '/dashboard': 'dashboard',
-    '/users': 'users',
-    '/users/:id': 'user',
-    '/users/search?sort=default': 'search'
-  }
-
   argsFixture = {
     id: 23
   }
+
+  m.middleware = []
 })
 
 describe('Router', function () {
@@ -109,7 +101,10 @@ describe('m.route', function () {
     it('should generate correct router hash', function (done) {
       // Overwrite
       mockRoute(m, function (rootElement, rootRoute, routes) {
-        assert.deepEqual(routes, classicRoutesFixture)
+        for (var route in routes) {
+          assert(typeof routes[route] === 'function')
+        }
+
         done()
       })
 
@@ -172,7 +167,10 @@ describe('m.route', function () {
     it('should generate correct router hash', function (done) {
       // Overwrite
       mockRoute(m, function (rootElement, rootRoute, routes) {
-        assert.deepEqual(routes, classicRoutesFixture)
+        for (var route in routes) {
+          assert(typeof routes[route] === 'function')
+        }
+
         done()
       })
 
@@ -402,6 +400,22 @@ describe('m.route.mode', function () {
   })
 })
 
+describe('m.route.use', function () {
+  it('should push the passed function into m.middleware', function () {
+    var noop = function () {}
+    m.route.use(noop)
+    assert(m.middleware.length === 1)
+    assert(m.middleware[0] === noop)
+  })
+
+  it('should properly handle error middleware', function () {
+    var errorHandler = function (err, req, next) { if (err) {} }
+    m.route.use(errorHandler)
+    assert(m.middleware.length === 0)
+    assert(m.routeErrorHandler === errorHandler)
+  })
+})
+
 describe('m.route.normalize', function () {
   it('should normalize route based on mode', function () {
     m.route.mode = 'search'
@@ -419,7 +433,7 @@ describe('m.route.buildQueryString', function () {
     var queryString = m.route.buildQueryString({
       foo: 'bar',
       hello: ['world', 'mars', 'pluto'],
-      world: {test: 3},
+      world: { test: 3 },
       bam: '',
       yup: null,
       removed: undefined

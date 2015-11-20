@@ -1,3 +1,7 @@
+/* globals define, m */
+
+'use strict'
+
 ;(function (plugin) {
   /* istanbul ignore next: differing implementations */
   if (typeof module !== 'undefined' && module !== null && module.exports) {
@@ -31,11 +35,67 @@
   ].join('|'), 'g')
 
   /**
+   * Generate route controller / view functions to handle middleware
+   *
+   * @param  {String} path  Route path
+   * @param  {Object} route Route object
+   * @return {Function}     Route controller function
+   */
+  function generateRouteController (path, route) {
+    var middleware = []
+
+    // Generate route middleware array
+    middleware.concat(m.middleware || [])
+    middleware.concat(route.middleware || [])
+
+    function generateMiddlewareNext (index, req, context) {
+      return function MiddlewareNext (err) {
+        if (err) {
+          if (m.routeErrorHandler) {
+            return m.routeErrorHandler(err, req)
+          }
+
+          req.error = err
+          return route.controller.bind(context)(req)
+        }
+
+        if (middleware[index]) {
+          return middleware[index].bind(context)(req, generateMiddlewareNext(index + 1, req, context))
+        }
+
+        return route.controller.bind(context)(req)
+      }
+    }
+
+    return function RouteController () {
+      var req = {
+        param: m.route.param,
+        namespace: route.namespace,
+        path: path,
+        uri: m.route()
+      }
+
+      if (middleware.length) {
+        return middleware[0].bind(this)(req, generateMiddlewareNext(1, req, this))
+      }
+
+      return route.controller.bind(this)(req)
+    }
+  }
+
+  /**
    * Mithril route collection
-   * @type {Array}
+   * @type {Object}
    * @private
    */
   m.routes = {}
+
+  /**
+   * Mithril global route middleware
+   * @type {Array}
+   * @private
+   */
+  m.middleware = []
 
   /**
    * Mithril default router
@@ -153,6 +213,22 @@
   })
 
   /**
+   * Register a middleware function to be applied before any route is invoked.
+   *
+   * @param  {Function} middleware Function to be invoked prior to route middleware
+   * @return {void}
+   */
+  m.route.use = function (middleware) {
+    if (middleware.length === 3) {
+      m.routeErrorHandler = middleware
+      return m
+    }
+
+    m.middleware.push(middleware)
+    return m
+  }
+
+  /**
    * Normalize route by router mode
    *
    * @param  {String} route
@@ -200,7 +276,7 @@
         m.routes[route.namespace] = path
 
         // Associate path to controller for classic Mithril router
-        m._route.routes[path] = route.controller
+        m._route.routes[path] = generateRouteController(path, route)
       }
     }
 
