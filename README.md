@@ -135,6 +135,8 @@ m.route.use(function (err, req, next) {
   app.internalPageState.err = err
   m.redirect('/err/500')
 })
+```
+
 ---
 
 ### m.redirect()
