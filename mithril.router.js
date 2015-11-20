@@ -1,4 +1,4 @@
-(function (plugin) {
+;(function (plugin) {
   /* istanbul ignore next: differing implementations */
   if (typeof module !== 'undefined' && module !== null && module.exports) {
     module.exports = plugin
@@ -57,9 +57,9 @@
    * @private
    */
   m._route.modes = {
-    pathname: "",
-    hash: "#",
-    search: "?"
+    pathname: '',
+    hash: '#',
+    search: '?'
   }
 
   /**
@@ -132,7 +132,7 @@
       return m.route._config(arguments[0], arguments[2], arguments[1])
     }
 
-    throw new Error("Method signature not support")
+    throw new Error('Method signature not support')
   }
 
   /**
@@ -180,11 +180,11 @@
         route = routes[path]
 
         if (!route.namespace) {
-          throw new Error("Missing namespace for route: " + path)
+          throw new Error('Missing namespace for route: ' + path)
         }
 
         if (!route.controller) {
-          throw new Error("Missing controller for route: " + path)
+          throw new Error('Missing controller for route: ' + path)
         }
 
         // Determine default root route
@@ -192,7 +192,7 @@
           if (route.namespace === root || path === route) {
             root = path
           }
-        } else if (route["default"] || route.root) {
+        } else if (route['default'] || route.root) {
           root = path
         }
 
@@ -223,7 +223,7 @@
    */
   m.route.param = function () {
     if (!Object.keys(m.routes).length) {
-      throw new Error("You must configure routing using m.route before calling m.route.param")
+      throw new Error('You must configure routing using m.route before calling m.route.param')
     }
 
     return m._route.param(arguments[0])
@@ -236,13 +236,13 @@
    * @return {Object}     Javascript Object
    */
   m.route.parseQueryString = function (str) {
-    var pairs = str.split("&")
+    var pairs = str.split('&')
     var params = {}
     var pair
 
     for (var i = 0, len = pairs.length; i < len; i++) {
-      pair = pairs[i].split("=")
-      params[decodeURIComponent(pair[0])] = pair[1] ? decodeURIComponent(pair[1]) : ""
+      pair = pairs[i].split('=')
+      params[decodeURIComponent(pair[0])] = pair[1] ? decodeURIComponent(pair[1]) : ''
     }
 
     return params
@@ -264,13 +264,13 @@
     var key
 
     function valueMapper (item) {
-      return encodeURIComponent(key + "[]") + "=" + encodeURIComponent(item)
+      return encodeURIComponent(key + '[]') + '=' + encodeURIComponent(item)
     }
 
     for (var prop in object) {
       /* istanbul ignore else */
       if (object.hasOwnProperty(prop)) {
-        key = prefix ? prefix + "[" + prop + "]" : prop
+        key = prefix ? prefix + '[' + prop + ']' : prop
         value = object[prop]
         valueType = type.call(value)
 
@@ -279,14 +279,14 @@
         } else if (valueType === '[object Array]') {
           pair = value.map(valueMapper).join('&')
         } else {
-          pair = encodeURIComponent(key) + "=" + encodeURIComponent(value)
+          pair = encodeURIComponent(key) + '=' + encodeURIComponent(value)
         }
 
         str.push(pair)
       }
     }
 
-    return str.join("&")
+    return str.join('&')
   }
 
   /**
@@ -342,12 +342,12 @@
     var options = arguments[1] || {}
     var namespace = arguments[0]
     var route = m.routes[namespace]
-    var prefix = ""
+    var prefix = ''
     var reversedRoute
     var query
 
     if (!route) {
-      throw new Error("Invalid route namespace: " + namespace)
+      throw new Error('Invalid route namespace: ' + namespace)
     }
 
     reversedRoute = m.reverse._reverseRoute(route, options.params)
@@ -355,7 +355,7 @@
     if (typeof options.prefix === 'string') {
       prefix = options.prefix
     } else if (options.prefix) {
-      prefix = m._route.modes[m.route.mode] || ""
+      prefix = m._route.modes[m.route.mode] || ''
     }
 
     if (options.query) {

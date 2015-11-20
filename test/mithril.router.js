@@ -1,3 +1,5 @@
+/* globals beforeEach, describe, it */
+
 var assert = require('assert')
 var classicRoutesFixture
 var documentFixture
@@ -22,21 +24,21 @@ beforeEach(function () {
   }
 
   routesFixture = {
-    "/": { controller: "home", namespace: "index" },
-    "/login": { controller: "login", namespace: "login" },
-    "/dashboard": { controller: "dashboard", namespace: "dashboard" },
-    "/users": { controller: "users", namespace: "users" },
-    "/users/:id": { controller: "user", namespace: "user" },
-    "/users/search?sort=default": {controller: "search", namespace: "user.search"}
+    '/': { controller: 'home', namespace: 'index' },
+    '/login': { controller: 'login', namespace: 'login' },
+    '/dashboard': { controller: 'dashboard', namespace: 'dashboard' },
+    '/users': { controller: 'users', namespace: 'users' },
+    '/users/:id': { controller: 'user', namespace: 'user' },
+    '/users/search?sort=default': {controller: 'search', namespace: 'user.search'}
   }
 
   classicRoutesFixture = {
-    "/": "home",
-    "/login": "login",
-    "/dashboard": "dashboard",
-    "/users": "users",
-    "/users/:id": "user",
-    "/users/search?sort=default": "search"
+    '/': 'home',
+    '/login': 'login',
+    '/dashboard': 'dashboard',
+    '/users': 'users',
+    '/users/:id': 'user',
+    '/users/search?sort=default': 'search'
   }
 
   argsFixture = {
@@ -90,18 +92,18 @@ describe('m.route', function () {
       })
 
       // Configure
-      m.route(documentFixture, "index", routesFixture)
+      m.route(documentFixture, 'index', routesFixture)
     })
 
     it('should find rootRoute by namespace', function (done) {
       // Overwrite
       mockRoute(m, function (rootElement, rootRoute, routes) {
-        assert(rootRoute === "/")
+        assert(rootRoute === '/')
         done()
       })
 
       // Configure
-      m.route(documentFixture, "index", routesFixture)
+      m.route(documentFixture, 'index', routesFixture)
     })
 
     it('should generate correct router hash', function (done) {
@@ -112,21 +114,21 @@ describe('m.route', function () {
       })
 
       // Configure
-      m.route(documentFixture, "index", routesFixture)
+      m.route(documentFixture, 'index', routesFixture)
     })
 
     it('should throw error when namespace is missing', function () {
       assert.throws(function () {
-        m.route(documentFixture, "index", {
-          '/': { controller: "index" }
+        m.route(documentFixture, 'index', {
+          '/': { controller: 'index' }
         })
       }, Error)
     })
 
     it('should throw error when controller is missing', function () {
       assert.throws(function () {
-        m.route(documentFixture, "index", {
-          '/': { namespace: "index" }
+        m.route(documentFixture, 'index', {
+          '/': { namespace: 'index' }
         })
       }, Error)
     })
@@ -147,7 +149,7 @@ describe('m.route', function () {
     it('should find rootRoute by namespace when using root property', function (done) {
       // Overwrite
       mockRoute(m, function (rootElement, rootRoute, routes) {
-        assert(rootRoute === "/")
+        assert(rootRoute === '/')
         done()
       })
 
@@ -159,7 +161,7 @@ describe('m.route', function () {
     it('should fallback to first property for rootRoute when no rootRoute is defined', function (done) {
       // Overwrite
       mockRoute(m, function (rootElement, rootRoute, routes) {
-        assert(rootRoute === "/")
+        assert(rootRoute === '/')
         done()
       })
 
@@ -189,12 +191,12 @@ describe('m.route', function () {
 
       // Overwrite
       mockRoute(m, function (route, args) {
-        assert(route === "/")
+        assert(route === '/')
         done()
       })
 
       // Configure
-      m.route("index")
+      m.route('index')
     })
 
     it('should return the arguments unchanged', function (done) {
@@ -211,7 +213,7 @@ describe('m.route', function () {
       })
 
       // Configure
-      m.route("index", argsFixture)
+      m.route('index', argsFixture)
     })
 
     it('should support replaceHistory flag instead of arguments', function (done) {
@@ -223,13 +225,13 @@ describe('m.route', function () {
 
       // Overwrite
       mockRoute(m, function (route, replaceHistory) {
-        assert(route === "/")
+        assert(route === '/')
         assert(replaceHistory === true)
         done()
       })
 
       // Configure
-      m.route("index", true)
+      m.route('index', true)
     })
 
     it('should support both replaceHistory and arguments', function (done) {
@@ -241,14 +243,14 @@ describe('m.route', function () {
 
       // Overwrite
       mockRoute(m, function (route, args, replaceHistory) {
-        assert(route === "/")
+        assert(route === '/')
         assert.deepEqual(args, argsFixture)
         assert(replaceHistory === true)
         done()
       })
 
       // Configure
-      m.route("index", argsFixture, true)
+      m.route('index', argsFixture, true)
     })
 
     it('should support both replaceHistory and no arguments', function (done) {
@@ -260,14 +262,14 @@ describe('m.route', function () {
 
       // Overwrite
       mockRoute(m, function (route, args, replaceHistory) {
-        assert(route === "/")
+        assert(route === '/')
         assert(args === undefined)
         assert(replaceHistory === true)
         done()
       })
 
       // Configure
-      m.route("index", undefined, true)
+      m.route('index', undefined, true)
     })
 
     it('should return route when namespace is not used', function (done) {
@@ -279,12 +281,12 @@ describe('m.route', function () {
 
       // Overwrite
       mockRoute(m, function (route, args) {
-        assert(route === "/")
+        assert(route === '/')
         done()
       })
 
       // Configure
-      m.route("/")
+      m.route('/')
     })
 
     it('should return arguments unchanged when namespace is not used', function (done) {
@@ -301,7 +303,7 @@ describe('m.route', function () {
       })
 
       // Configure
-      m.route("/", argsFixture)
+      m.route('/', argsFixture)
     })
 
     it('should support both replaceHistory and arguments without namespace', function (done) {
@@ -313,14 +315,14 @@ describe('m.route', function () {
 
       // Overwrite
       mockRoute(m, function (route, args, replaceHistory) {
-        assert(route === "/")
+        assert(route === '/')
         assert(args === undefined)
         assert(replaceHistory === true)
         done()
       })
 
       // Configure
-      m.route("/", undefined, true)
+      m.route('/', undefined, true)
     })
   })
 
@@ -362,7 +364,7 @@ describe('m.route', function () {
 
       // Overwrite
       mockRoute(m, function () {
-        currentPath = "/";
+        currentPath = '/'
       })
 
       // Configure
@@ -370,11 +372,11 @@ describe('m.route', function () {
 
       // Overwrite
       mockRoute(m, function () {
-        return currentPath;
+        return currentPath
       })
 
       // Configure
-      assert(m.route() === "/")
+      assert(m.route() === '/')
     })
   })
 
@@ -414,23 +416,25 @@ describe('m.route.normalize', function () {
 
 describe('m.route.buildQueryString', function () {
   it('should properly build query strings', function () {
-    assert(m.route.buildQueryString({
-      foo: "bar",
-      hello: ["world", "mars", "pluto"],
-      world: {test:3},
-      bam: "",
+    var queryString = m.route.buildQueryString({
+      foo: 'bar',
+      hello: ['world', 'mars', 'pluto'],
+      world: {test: 3},
+      bam: '',
       yup: null,
       removed: undefined
-    }) === 'foo=bar&hello%5B%5D=world&hello%5B%5D=mars&hello%5B%5D=pluto&world%5Btest%5D=3&bam=&yup=null&removed=undefined')
+    })
+
+    assert(queryString === 'foo=bar&hello%5B%5D=world&hello%5B%5D=mars&hello%5B%5D=pluto&world%5Btest%5D=3&bam=&yup=null&removed=undefined')
   })
 })
 
 describe('m.route.parseQueryString', function () {
   it('should properly parse query strings', function () {
-    assert.deepEqual(
-      m.route.parseQueryString('foo=bar&hello%5B%5D=world&hello%5B%5D=mars&hello%5B%5D=pluto&bam=&yup=null&removed=undefined'), {
-      "foo":"bar","hello[]":"pluto","bam":"","yup":"null","removed":"undefined"}
-    )
+    var parsedQueryString = m.route.parseQueryString('foo=bar&hello%5B%5D=world&hello%5B%5D=mars&hello%5B%5D=pluto&bam=&yup=null&removed=undefined')
+    assert.deepEqual(parsedQueryString, {
+      'foo': 'bar', 'hello[]': 'pluto', 'bam': '', 'yup': 'null', 'removed': 'undefined'
+    })
   })
 })
 
@@ -449,7 +453,7 @@ describe('m.route.param', function () {
     }
 
     m._route.param = function () {
-      assert(arguments[0] === "key")
+      assert(arguments[0] === 'key')
       done()
     }
 
@@ -467,12 +471,12 @@ describe('m.redirect', function () {
 
     // Overwrite
     mockRoute(m, function (route, args) {
-      assert(route === "/")
+      assert(route === '/')
       done()
     })
 
     // Configure
-    m.redirect("index")
+    m.redirect('index')
   })
 
   it('should return the arguments unchanged', function (done) {
@@ -489,7 +493,7 @@ describe('m.redirect', function () {
     })
 
     // Configure
-    m.redirect("index", argsFixture)
+    m.redirect('index', argsFixture)
   })
 })
 
@@ -497,58 +501,60 @@ describe('m.reverse', function () {
   it('should properly handle no arguments', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
-    assert(m.reverse("index") === '/')
+    assert(m.reverse('index') === '/')
   })
 
   it('should handle replacing named arguments', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
-    assert(m.reverse("user", { params: argsFixture }) === '/users/23')
+    assert(m.reverse('user', { params: argsFixture }) === '/users/23')
   })
 
   it('should handle optional parameters', function () {
     mockRoute(m, function () {})
 
     m.route(documentFixture, {
-      "/:key?": {controller: "index", namespace: "test"}
+      '/:key?': {controller: 'index', namespace: 'test'}
     })
 
-    assert(m.reverse("test") === '/')
+    assert(m.reverse('test') === '/')
   })
 
   it('should handle escaped characters', function () {
     mockRoute(m, function () {})
 
     m.route(documentFixture, {
-      "/:href\\/:key/(.+)?": {controller: "index", namespace: "test"}
+      '/:href\\/:key/(.+)?': {controller: 'index', namespace: 'test'}
     })
 
-    assert(m.reverse("test", {
+    var reversedRoute = m.reverse('test', {
       params: {
         href: 'test',
         key: 'world'
       }
-    }) === '/test\\/world/')
+    })
+
+    assert(reversedRoute === '/test\\/world/')
   })
 
   it('should error on missing arguments', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
     assert.throws(function () {
-      m.reverse("user", { query: { include: 'profile' }})
+      m.reverse('user', { query: { include: 'profile' } })
     }, Error)
   })
 
   it('should handle basic query strings', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
-    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }}) === '/users/23?include=profile')
+    assert(m.reverse('user', { params: argsFixture, query: { include: 'profile' } }) === '/users/23?include=profile')
   })
 
   it('should handle appending query strings', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
-    assert(m.reverse("user.search", { query: { q: 'nijikokun' }}) === '/users/search?sort=default&q=nijikokun')
+    assert(m.reverse('user.search', { query: { q: 'nijikokun' } }) === '/users/search?sort=default&q=nijikokun')
   })
 
   it("should throw error when namespace doesn't exist", function () {
@@ -556,27 +562,27 @@ describe('m.reverse', function () {
     m.route(documentFixture, routesFixture)
 
     assert.throws(function () {
-      m.reverse("current-user")
+      m.reverse('current-user')
     }, Error)
   })
 
-  it("should prepend route mode prefixes when prefix option is a boolean", function () {
+  it('should prepend route mode prefixes when prefix option is a boolean', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
-    m.route.mode = "hash"
-    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }, prefix: true }) === '#/users/23?include=profile')
+    m.route.mode = 'hash'
+    assert(m.reverse('user', { params: argsFixture, query: { include: 'profile' }, prefix: true }) === '#/users/23?include=profile')
   })
 
-  it("should fallback to an empty string when prefix mode cannot be found", function () {
+  it('should fallback to an empty string when prefix mode cannot be found', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
-    m.route.mode = "testing"
-    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }, prefix: true }) === '/users/23?include=profile')
+    m.route.mode = 'testing'
+    assert(m.reverse('user', { params: argsFixture, query: { include: 'profile' }, prefix: true }) === '/users/23?include=profile')
   })
 
-  it("should prepend custom prefix when prefix is a string", function () {
+  it('should prepend custom prefix when prefix is a string', function () {
     mockRoute(m, function () {})
     m.route(documentFixture, routesFixture)
-    assert(m.reverse("user", { params: argsFixture, query: { include: 'profile' }, prefix: '/api' }) === '/api/users/23?include=profile')
+    assert(m.reverse('user', { params: argsFixture, query: { include: 'profile' }, prefix: '/api' }) === '/api/users/23?include=profile')
   })
 })
