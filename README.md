@@ -149,12 +149,12 @@ Licensed under [The MIT License](LICENSE).
 [npm-version]: https://img.shields.io/npm/v/mithril-router.svg?style=flat
 [npm-downloads]: https://img.shields.io/npm/dm/mithril-router.svg?style=flat
 
-[coveralls-url]: https://coveralls.io/r/nijikokun/mithril-router
+[coveralls-url]: https://coveralls.io/r/Nijikokun/mithril-router
 [coveralls-coverage]: https://img.shields.io/coveralls/jekyll/jekyll.svg
 
 [codeclimate-url]: https://codeclimate.com/github/nijikokun/mithril-router
-[codeclimate-quality]: https://img.shields.io/codeclimate/github/nijikokun/mithril-router.svg?style=flat
-[codeclimate-coverage]: https://img.shields.io/codeclimate/coverage/github/nijikokun/mithril-router.svg?style=flat
+[codeclimate-quality]: https://img.shields.io/codeclimate/github/Nijikokun/mithril-router.svg?style=flat
+[codeclimate-coverage]: https://img.shields.io/codeclimate/coverage/github/Nijikokun/mithril-router.svg?style=flat
 
 [david-url]: https://david-dm.org/nijikokun/mithril-router
 [david-image]: https://img.shields.io/david/nijikokun/mithril-router.svg?style=flat
