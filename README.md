@@ -139,27 +139,27 @@ m.reverse('user', { prefix: '/api', params: { id: 23 }, query: { include: 'profi
 
 Licensed under [The MIT License](LICENSE).
 
-[license-url]: https://github.com/Nijikokun/mithril-router/blob/master/LICENSE
+[license-url]: https://github.com/nijikokun/mithril-router/blob/master/LICENSE
 
-[travis-url]: https://travis-ci.org/Nijikokun/mithril-router
-[travis-image]: https://img.shields.io/travis/Nijikokun/mithril-router.svg?style=flat
+[travis-url]: https://travis-ci.org/nijikokun/mithril-router
+[travis-image]: https://img.shields.io/travis/nijikokun/mithril-router.svg?style=flat
 
 [npm-url]: https://www.npmjs.com/package/mithril-router
 [npm-license]: https://img.shields.io/npm/l/mithril-router.svg?style=flat
 [npm-version]: https://img.shields.io/npm/v/mithril-router.svg?style=flat
 [npm-downloads]: https://img.shields.io/npm/dm/mithril-router.svg?style=flat
 
-[coveralls-url]: https://coveralls.io/r/Nijikokun/mithril-router
+[coveralls-url]: https://coveralls.io/r/nijikokun/mithril-router
 [coveralls-coverage]: https://img.shields.io/coveralls/jekyll/jekyll.svg
 
-[codeclimate-url]: https://codeclimate.com/github/Nijikokun/mithril-router
-[codeclimate-quality]: https://img.shields.io/codeclimate/github/Nijikokun/mithril-router.svg?style=flat
-[codeclimate-coverage]: https://img.shields.io/codeclimate/coverage/github/Nijikokun/mithril-router.svg?style=flat
+[codeclimate-url]: https://codeclimate.com/github/nijikokun/mithril-router
+[codeclimate-quality]: https://img.shields.io/codeclimate/github/nijikokun/mithril-router.svg?style=flat
+[codeclimate-coverage]: https://img.shields.io/codeclimate/coverage/github/nijikokun/mithril-router.svg?style=flat
 
-[david-url]: https://david-dm.org/Nijikokun/mithril-router
-[david-image]: https://img.shields.io/david/Nijikokun/mithril-router.svg?style=flat
+[david-url]: https://david-dm.org/nijikokun/mithril-router
+[david-image]: https://img.shields.io/david/nijikokun/mithril-router.svg?style=flat
 
-[download]: https://github.com/Nijikokun/mithril-router/archive/v1.2.3.zip
+[download]: https://github.com/nijikokun/mithril-router/archive/v1.2.3.zip
 [mithril]: https://github.com/lhorie/mithril.js
 [mithril-mode]: http://lhorie.github.io/mithril/mithril.route.html#mode
 [mithril-param]: http://lhorie.github.io/mithril/mithril.route.html#param
